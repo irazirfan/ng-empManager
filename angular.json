@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-empManager"
+    }
+  },
+  "defaultProject": "ng-empManager",
+  "cli": {
+    "analytics": false
+  }
 }
