@@ -15,7 +15,7 @@ import { Employee } from './employee';
 
 const appRoutes = [
   { path: 'AddEmployee', component: AddEditEmpComponent },
-  { path: 'Edit/:id', component: AddEditEmpComponent },
+  { path: 'Edit/:id', component: AddEditEmpComponent }
 ]
 
 @NgModule({

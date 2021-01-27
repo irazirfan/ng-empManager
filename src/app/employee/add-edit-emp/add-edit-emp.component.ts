@@ -62,20 +62,20 @@ export class AddEditEmpComponent implements OnInit {
       this.empService.createEmployee(employee).subscribe(
         () => {
           this.dataSaved = true;
-          this.message = "Record Saved Succesfully;";
+          this.message = "Record Saved Succesfully";
           this.employeeIdUpdate = null;
           this.employeeForm.reset();
-          this.router.navigate(['/']);
+          alert(this.message);
         }
       );
     } else {
       employee.Id = this.employeeIdUpdate;
       this.empService.updateEmployee(employee).subscribe(() => {
           this.dataSaved = true;
-          this.message = "Record updated Succesfully;";
+          this.message = "Record updated Succesfully";
           this.employeeIdUpdate = null;
           this.employeeForm.reset();
-          this.router.navigate(['/']);
+          alert(this.message);
       });
     }
   }
