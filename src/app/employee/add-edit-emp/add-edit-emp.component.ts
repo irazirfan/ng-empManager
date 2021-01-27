@@ -1,7 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from 'src/app/employee';
 import {EmployeeService} from 'src/app/employee.service';
 
@@ -14,7 +14,8 @@ export class AddEditEmpComponent implements OnInit {
 
   constructor(private empService:EmployeeService,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   dataSaved: boolean;
   employeeForm: any;
@@ -65,6 +66,7 @@ export class AddEditEmpComponent implements OnInit {
           this.message = "Record Saved Succesfully;";
           this.employeeIdUpdate = null;
           this.employeeForm.reset();
+          this.router.navigate(['/']);
         }
       );
     } else {
@@ -74,6 +76,7 @@ export class AddEditEmpComponent implements OnInit {
           this.message = "Record updated Succesfully;";
           this.employeeIdUpdate = null;
           this.employeeForm.reset();
+          this.router.navigate(['/']);
       });
     }
   }
