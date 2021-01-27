@@ -13,7 +13,7 @@ export class ShowEmpComponent implements OnInit {
   EmployeeList:Employee[];
   ModalTitle:string;
   ActivateAddEditEmpComp:boolean=false;
-  totalRecords: Number;
+  totalRecords: number;
   page:Number=1;
   dataSaved: boolean;
   employeeForm: any;
@@ -43,8 +43,8 @@ export class ShowEmpComponent implements OnInit {
 
   refreshEmpList(){
     this.empService.getAllEmployee().subscribe(data=>{
-      this.EmployeeList=data;
-      this.totalRecords = data.length;
+    this.EmployeeList=data;
+    this.totalRecords = data.length;
     });
   }
 }
