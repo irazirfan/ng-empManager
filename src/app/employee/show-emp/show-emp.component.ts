@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Employee } from 'src/app/employee';
 import { EmployeeService } from 'src/app/employee.service';
-import { AddEditEmpComponent } from '../add-edit-emp/add-edit-emp.component';
 
 @Component({
   selector: 'app-show-emp',
@@ -15,28 +15,21 @@ export class ShowEmpComponent implements OnInit {
   ActivateAddEditEmpComp:boolean=false;
   totalRecords: Number;
   page:Number=1;
+  dataSaved: boolean;
+  employeeForm: any;
+  employeeIdUpdate = null;
+  message = null;
 
-  constructor(private empService:EmployeeService, private employee: Employee) { }
+  constructor(private empService:EmployeeService,
+              private employee: Employee,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.refreshEmpList();
   }
 
-  addClick(){
-    this.employee.Name = "";
-    this.employee.Email = "";
-    this.employee.Address = "";
-    this.employee.Phone = "";
-    this.ModalTitle="Add Employee";
-    this.ActivateAddEditEmpComp=true;
-
-  }
-
-  editClick(item){
-    console.log(item);
-    this.employee=item;
-    this.ModalTitle="Edit Employee";
-    this.ActivateAddEditEmpComp=true;
+  editClick(id: number){
+    this.router.navigate(['/Edit', id]);
   }
 
   deleteClick(item){
@@ -46,11 +39,6 @@ export class ShowEmpComponent implements OnInit {
         this.refreshEmpList();
       })
     }
-  }
-
-  closeClick(){
-    this.ActivateAddEditEmpComp=false;
-    this.refreshEmpList();
   }
 
   refreshEmpList(){

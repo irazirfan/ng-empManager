@@ -1,5 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Employee } from 'src/app/employee';
 import {EmployeeService} from 'src/app/employee.service';
 
@@ -10,7 +12,9 @@ import {EmployeeService} from 'src/app/employee.service';
 })
 export class AddEditEmpComponent implements OnInit {
 
-  constructor(private empService:EmployeeService, private formBuilder: FormBuilder) { }
+  constructor(private empService:EmployeeService,
+              private formBuilder: FormBuilder,
+              private route: ActivatedRoute) { }
 
   dataSaved: boolean;
   employeeForm: any;
@@ -18,9 +22,23 @@ export class AddEditEmpComponent implements OnInit {
   message = null;
 
   ngOnInit(): void {
+    this.employeeForm = this.formBuilder.group({
+      Name: ['', [Validators.required]],
+      Email: ['', [Validators.required]],
+      Address: ['', [Validators.required]],
+      Phone: ['', [Validators.required]]
+    });
+    this.empService.getAllEmployee();
+
+    this.route.paramMap.subscribe(params => {
+      const id = +params.get('id');
+      if(id) {
+        this.loadEmployeeToEdit(id);
+      }
+    });
   }
 
-  onFormSubmit(){
+  onFormSubmit(employeeForm: any){
     this.dataSaved = false;
     const employee = this.employeeForm.value;
     this.createEmployee(employee);
@@ -59,4 +77,6 @@ export class AddEditEmpComponent implements OnInit {
       });
     }
   }
+
+
 }
