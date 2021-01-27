@@ -66,6 +66,7 @@ export class AddEditEmpComponent implements OnInit {
           this.employeeIdUpdate = null;
           this.employeeForm.reset();
           alert(this.message);
+          this.router.navigate(['/']);
         }
       );
     } else {
@@ -76,6 +77,7 @@ export class AddEditEmpComponent implements OnInit {
           this.employeeIdUpdate = null;
           this.employeeForm.reset();
           alert(this.message);
+          this.router.navigate(['/']);
       });
     }
   }
