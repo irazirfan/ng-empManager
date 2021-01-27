@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src='main.js'></script>
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body" style="background-color: whitesmoke;">
+        <nav class="navbar navbar-dark bg-primary">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/">Employee Manager</a>
+            </div>
+            <ul class="nav navbar-dark bg-primary navbar-right">
+              <!-- <li><button style="background-color: red; color: white;">Delete</button></li>&nbsp; -->
+              <li><a type="button" href="/AddEmployee" style="background-color: green; text-decoration: none; color: white;">Add New Employee</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let dataItem of EmployeeList | paginate: { id: 'listing_pagination',
+              itemsPerPage:5,
+              currentPage: page,
+              totalItems: totalRecords }">
+                  <td hidden>{{dataItem.Id}}</td>
+                  <td>{{dataItem.Name}}</td>
+                  <td>{{dataItem.Email}}</td>
+                  <td>{{dataItem.Address}}</td>
+                  <td>{{dataItem.Phone}}</td>
+                  <td>
+                      <button class="btn btn-sm btn-primary"
+                      (click)="editClick(dataItem)">
+                      Edit
+                      </button>
+                      <button class="btn btn-sm btn-danger"
+                      (click)="deleteClick(dataItem)">
+                      Delete
+                    </button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <div class="row">
+        <div class="col-md-5">
+          <!-- showing 5 out of <span>{{totalRecords}}</span> entries -->
+        </div>
+          <pagination-controls style="padding-left: 300px;" responsive="true" id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+        </div>
+      </div>
+      </div>
+    </div>
+
+
+</body>
+</html>
