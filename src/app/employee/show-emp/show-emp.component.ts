@@ -25,6 +25,10 @@ export class ShowEmpComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    this.empService.refreshNeeded$
+    .subscribe(() => {
+      this.refreshEmpList();
+    });
     this.refreshEmpList();
   }
 

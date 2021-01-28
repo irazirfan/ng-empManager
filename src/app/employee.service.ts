@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Employee } from './employee';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,12 @@ import { Employee } from './employee';
 export class EmployeeService {
 
   url = 'https://localhost:44326/Api/v1';
+
+  private _refreshNeeded$ = new Subject<void>();
+
+  get refreshNeeded$() {
+    return this._refreshNeeded$;
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -23,13 +30,21 @@ export class EmployeeService {
 
   createEmployee(employee: Employee): Observable<Employee> {
     const httpOptions = {headers: new HttpHeaders({ 'content-type': 'application/json'})}
-    return this.http.post<Employee>(this.url + '/AddEmployee', employee, httpOptions);
-  }
+    return this.http.post<Employee>(this.url + '/AddEmployee', employee, httpOptions)
+    .pipe(
+        tap(() => {
+        this._refreshNeeded$.next();
+      })
+  )};
 
   updateEmployee(employee: Employee): Observable<Employee> {
     const httpOptions = {headers: new HttpHeaders({ 'content-type': 'application/json'})}
-    return this.http.put<Employee>(this.url + '/UpdateEmployee', employee, httpOptions);
-  }
+    return this.http.put<Employee>(this.url + '/UpdateEmployee', employee, httpOptions)
+    .pipe(
+      tap(() => {
+      this._refreshNeeded$.next();
+    })
+  )};
 
   deleteEmployeeById(id: number): Observable<number> {
     const httpOptions = {headers: new HttpHeaders({ 'content-type': 'application/json'})}
