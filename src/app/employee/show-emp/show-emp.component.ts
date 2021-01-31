@@ -19,6 +19,7 @@ export class ShowEmpComponent implements OnInit {
   employeeForm: any;
   employeeIdUpdate = null;
   message = null;
+  checks = false;
 
   constructor(private empService:EmployeeService,
               private employee: Employee,
@@ -30,6 +31,17 @@ export class ShowEmpComponent implements OnInit {
       this.refreshEmpList();
     });
     this.refreshEmpList();
+  }
+
+  refreshEmpList(){
+    this.empService.getAllEmployee().subscribe(data=>{
+    this.EmployeeList=data;
+    this.totalRecords = data.length;
+    });
+  }
+
+  addEmployee(){
+    this.router.navigate(['/AddEmployee']);
   }
 
   editClick(id: number){
@@ -45,10 +57,27 @@ export class ShowEmpComponent implements OnInit {
     }
   }
 
-  refreshEmpList(){
-    this.empService.getAllEmployee().subscribe(data=>{
-    this.EmployeeList=data;
-    this.totalRecords = data.length;
-    });
+  deleteEmployees(){
+    const selectedEmployees = this.EmployeeList.filter(employee => employee.Checked).map(p => p.Id);
+    if(selectedEmployees && selectedEmployees.length > 0){
+      if(confirm('Are you sure?')){
+        this.empService.deleteEmployees(selectedEmployees).subscribe(data=>{
+          alert("Records Deleted");
+          this.refreshEmpList();
+        })
+      }
+    }
+    else{
+      alert('No rows selected');
+    }
   }
+
+  checkAllCheckBox(ev) {
+		this.EmployeeList.forEach(x => x.Checked = ev.target.Checked)
+	}
+
+	isAllCheckBoxChecked() {
+		return this.EmployeeList.every(p => p.Checked);
+	}
+
 }

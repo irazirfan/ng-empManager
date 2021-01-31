@@ -50,4 +50,10 @@ export class EmployeeService {
     const httpOptions = {headers: new HttpHeaders({ 'content-type': 'application/json'})}
     return this.http.delete<number>(this.url + '/DeleteEmployee?id=' + id, httpOptions);
   }
+
+  deleteEmployees(ids: number[]): Observable<any>{
+    const httpOptions = {headers: new HttpHeaders({ 'content-type': 'application/json'})}
+    return this.http.post<any>(this.url+ '/DeleteEmployees', ids, httpOptions);
+  }
+
 }

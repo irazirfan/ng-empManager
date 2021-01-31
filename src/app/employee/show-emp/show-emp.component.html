@@ -19,9 +19,11 @@
               <a class="navbar-brand" href="/">Employee Manager</a>
             </div>
             <ul class="nav navbar-dark bg-primary navbar-right">
-              <!-- <li><button style="background-color: red; color: white;">Delete</button></li>&nbsp; -->
-              <li><a type="button" href="/AddEmployee" style="background-color: green; text-decoration: none;
-                  color: white; padding-left: 5px; padding-right: 5px;">Add New Employee</a></li>
+              <li><button type="button" *ngIf (click)="deleteEmployees()" style="background-color: red; color: white;">Delete</button></li>&nbsp;
+              <li><button type="button" (click)="addEmployee()" style="background-color: green; color: white;">Add New Employee</button></li>
+              <!-- <li><a type="button" href="/AddEmployee" style="background-color: green; text-decoration: none;
+                  color: white; height: 30px; padding-left: 5px; padding-right: 5px;">Add New Employee</a></li>
+              -->
             </ul>
           </div>
         </nav>
@@ -29,6 +31,7 @@
         <table class="table table-striped">
           <thead>
               <tr>
+                  <th><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"></th>
                   <th>Name</th>
                   <th>Email</th>
                   <th>Address</th>
@@ -40,8 +43,9 @@
               <tr *ngFor="let dataItem of EmployeeList | paginate: { id: 'listing_pagination',
               itemsPerPage:5,
               currentPage: page,
-              totalItems: totalRecords }">
+              totalItems: totalRecords } let i = index">
                   <td hidden>{{dataItem.Id}}</td>
+                  <td><input type="checkbox" value="{{dataItem.Id}}" [(ngModel)]="dataItem.Checked"></td>
                   <td>{{dataItem.Name}}</td>
                   <td>{{dataItem.Email}}</td>
                   <td>{{dataItem.Address}}</td>

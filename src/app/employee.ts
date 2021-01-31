@@ -4,4 +4,5 @@ export class Employee {
     Email: string;
     Address: string;
     Phone: string;
+    Checked?: boolean;
 }
